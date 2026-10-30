@@ -7,13 +7,14 @@
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
 <style>
     :root {
-        --primary: #00e5ff; /* Cyan Neon */
-        --secondary: #0055ff; /* Blue */
+        --primary: #00e5ff;
+        --secondary: #0055ff;
         --bg-dark: #0a1128;
         --bg-card: #111c3a;
         --text-light: #e2e8f0;
         --text-muted: #94a3b8;
         --wa-green: #25d366;
+        --danger: #ff4757;
     }
 
     * {
@@ -72,6 +73,12 @@
 
     .logo span { color: var(--primary); }
 
+    .nav-links {
+        display: flex;
+        gap: 15px;
+        align-items: center;
+    }
+
     .nav-btn {
         background: rgba(255, 255, 255, 0.1);
         backdrop-filter: blur(10px);
@@ -83,12 +90,23 @@
         font-size: 14px;
         text-decoration: none;
         transition: 0.3s;
+        cursor: pointer;
     }
 
     .nav-btn:hover {
         background: var(--primary);
         color: var(--bg-dark);
         border-color: var(--primary);
+    }
+
+    .nav-btn.danger {
+        background: rgba(255, 71, 87, 0.1);
+        color: var(--danger);
+        border-color: rgba(255, 71, 87, 0.3);
+    }
+    .nav-btn.danger:hover {
+        background: var(--danger);
+        color: white;
     }
 
     /* HERO SECTION */
@@ -103,7 +121,6 @@
         overflow: hidden;
     }
 
-    /* Efek Cahaya */
     .glow-1 {
         position: absolute; top: 10%; right: -10%; width: 400px; height: 400px;
         background: var(--secondary); filter: blur(150px); opacity: 0.3; border-radius: 50%;
@@ -164,12 +181,12 @@
         justify-content: center;
     }
 
-    /* Gambar Router/Wifi */
     .router-img {
         width: 80%;
         max-width: 400px;
         animation: float 4s ease-in-out infinite;
         filter: drop-shadow(0 20px 30px rgba(0,0,0,0.5));
+        border-radius: 30px;
     }
 
     /* FITUR SECTION */
@@ -263,22 +280,9 @@
         letter-spacing: 1px;
     }
 
-    .speed-box {
-        margin: 20px 0;
-    }
-
-    .speed-number {
-        font-size: 60px;
-        font-weight: 900;
-        line-height: 1;
-        color: var(--primary);
-    }
-
-    .speed-unit {
-        font-size: 20px;
-        font-weight: 600;
-        color: var(--text-muted);
-    }
+    .speed-box { margin: 20px 0; }
+    .speed-number { font-size: 60px; font-weight: 900; line-height: 1; color: var(--primary); }
+    .speed-unit { font-size: 20px; font-weight: 600; color: var(--text-muted); }
 
     .price-box {
         margin: 30px 0;
@@ -287,23 +291,9 @@
         border-bottom: 1px dashed rgba(255,255,255,0.1);
     }
 
-    .price-currency {
-        font-size: 20px;
-        font-weight: 600;
-        vertical-align: top;
-        color: var(--text-muted);
-    }
-
-    .price-amount {
-        font-size: 48px;
-        font-weight: 900;
-        color: white;
-    }
-
-    .price-period {
-        font-size: 16px;
-        color: var(--text-muted);
-    }
+    .price-currency { font-size: 20px; font-weight: 600; vertical-align: top; color: var(--text-muted); }
+    .price-amount { font-size: 48px; font-weight: 900; color: white; }
+    .price-period { font-size: 16px; color: var(--text-muted); }
 
     .benefit-list {
         text-align: left;
@@ -319,10 +309,7 @@
         gap: 10px;
     }
 
-    .benefit-list li::before {
-        content: '✅';
-        font-size: 16px;
-    }
+    .benefit-list li::before { content: '✅'; font-size: 16px; }
 
     .order-btn {
         display: block;
@@ -336,6 +323,8 @@
         font-size: 16px;
         transition: 0.3s;
         box-shadow: 0 10px 20px rgba(0, 229, 255, 0.3);
+        border: none;
+        cursor: pointer;
     }
 
     .order-btn:hover {
@@ -353,10 +342,7 @@
         border: 1px solid rgba(255,255,255,0.05);
     }
 
-    .coverage h2 {
-        font-size: 24px;
-        margin-bottom: 20px;
-    }
+    .coverage h2 { font-size: 24px; margin-bottom: 20px; }
 
     .coverage-box {
         max-width: 500px;
@@ -374,12 +360,9 @@
         color: white;
         font-size: 15px;
         outline: none;
-        font-family: 'Outfit', sans-serif;
     }
 
-    .coverage-box input:focus {
-        border-color: var(--primary);
-    }
+    .coverage-box input:focus { border-color: var(--primary); }
 
     .coverage-box button {
         background: var(--primary);
@@ -392,15 +375,121 @@
         transition: 0.3s;
     }
 
-    .coverage-box button:hover {
-        background: white;
-    }
+    .coverage-box button:hover { background: white; }
 
     .coverage-result {
         margin-top: 15px;
         font-size: 14px;
         font-weight: 600;
         display: none;
+    }
+
+    /* MODAL / POP-UP FORM */
+    .modal-overlay {
+        display: none;
+        position: fixed;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(10, 17, 40, 0.8);
+        backdrop-filter: blur(8px);
+        z-index: 9999;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+    }
+
+    .modal-overlay.active { display: flex; }
+
+    .modal-content {
+        background: var(--bg-card);
+        width: 100%;
+        max-width: 450px;
+        border-radius: 24px;
+        padding: 30px;
+        border: 1px solid rgba(0, 229, 255, 0.3);
+        box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        position: relative;
+        animation: fadeUp 0.4s ease-out;
+    }
+
+    .close-modal {
+        position: absolute;
+        top: 15px; right: 20px;
+        background: none;
+        border: none;
+        color: var(--text-muted);
+        font-size: 24px;
+        cursor: pointer;
+    }
+
+    .modal-content h2 {
+        font-size: 22px;
+        margin-bottom: 5px;
+        color: white;
+    }
+
+    .modal-content p.subtitle {
+        font-size: 13px;
+        color: var(--text-muted);
+        margin-bottom: 20px;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+        text-align: left;
+    }
+
+    .form-group label {
+        display: block;
+        font-size: 13px;
+        font-weight: 600;
+        margin-bottom: 8px;
+        color: var(--text-light);
+    }
+
+    .form-group input, .form-group textarea {
+        width: 100%;
+        padding: 12px 15px;
+        border-radius: 12px;
+        border: 1px solid rgba(255,255,255,0.1);
+        background: rgba(0,0,0,0.2);
+        color: white;
+        font-family: 'Outfit', sans-serif;
+        font-size: 14px;
+        outline: none;
+        transition: 0.3s;
+    }
+
+    .form-group input:focus, .form-group textarea:focus {
+        border-color: var(--primary);
+        background: rgba(0, 229, 255, 0.05);
+    }
+
+    .submit-btn {
+        width: 100%;
+        background: var(--primary);
+        color: var(--bg-dark);
+        border: none;
+        padding: 15px;
+        border-radius: 12px;
+        font-weight: 800;
+        font-size: 15px;
+        cursor: pointer;
+        margin-top: 10px;
+        transition: 0.3s;
+    }
+
+    .submit-btn:hover {
+        background: white;
+        transform: scale(1.02);
+    }
+    
+    .submit-btn.danger {
+        background: var(--danger);
+        color: white;
+    }
+    
+    .submit-btn.danger:hover {
+        background: #ff6b81;
     }
 
     /* FOOTER */
@@ -411,15 +500,8 @@
         border-top: 1px solid rgba(255,255,255,0.05);
     }
 
-    footer .logo {
-        justify-content: center;
-        margin-bottom: 10px;
-    }
-
-    footer p {
-        color: var(--text-muted);
-        font-size: 13px;
-    }
+    footer .logo { justify-content: center; margin-bottom: 10px; }
+    footer p { color: var(--text-muted); font-size: 13px; }
 
     /* FLOATING WA BUTTON */
     .wa-float {
@@ -440,11 +522,11 @@
         z-index: 1000;
         transition: 0.3s;
         animation: float 3s ease-in-out infinite;
+        cursor: pointer;
+        border: none;
     }
 
-    .wa-float:hover {
-        transform: scale(1.1);
-    }
+    .wa-float:hover { transform: scale(1.1); }
 
 </style>
 </head>
@@ -452,7 +534,10 @@
 
 <nav>
     <div class="logo">📡 SOCA<span>WIFI</span></div>
-    <a href="https://wa.me/6285889046739?text=Halo%20Soca%20Wifi,%20saya%20ingin%20bertanya%20mengenai%20pemasangan%20wifi." class="nav-btn" target="_blank">Hubungi Kami</a>
+    <div class="nav-links">
+        <button class="nav-btn danger" onclick="openModal('lapor')">Lapor Gangguan</button>
+        <button class="nav-btn" onclick="openModal('pesan')">Hubungi Kami</button>
+    </div>
 </nav>
 
 <!-- HERO SECTION -->
@@ -465,8 +550,7 @@
         <p>Solusi internet rumah tanpa batas (Unlimited) tanpa FUP. Streaming lancar, main game tanpa lag, dan kerja jadi lebih produktif bersama Soca Wifi.</p>
         
         <div class="hero-img-container">
-            <!-- Gambar Router Wifi dari Unsplash -->
-            <img src="https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?q=80&w=800&auto=format&fit=crop" alt="Router Wifi" class="router-img" style="border-radius: 30px;">
+            <img src="https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?q=80&w=800&auto=format&fit=crop" alt="Router Wifi" class="router-img">
         </div>
     </div>
 </section>
@@ -510,19 +594,16 @@
     
     <div class="price-card">
         <div class="price-badge">PALING LARIS</div>
-        
         <div class="speed-box">
             <span class="speed-number">30</span>
             <span class="speed-unit">Mbps</span>
         </div>
-        
         <div class="price-box">
             <span class="price-currency">Rp</span>
             <span class="price-amount">165</span>
             <span class="price-currency">rb</span>
             <span class="price-period">/ bulan</span>
         </div>
-        
         <ul class="benefit-list">
             <li>Kecepatan hingga 30 Mbps</li>
             <li>Unlimited Tanpa FUP</li>
@@ -531,9 +612,10 @@
             <li>Cocok untuk 3-5 Perangkat</li>
         </ul>
         
-        <a href="https://wa.me/6285889046739?text=Halo%20Soca%20Wifi,%20saya%20ingin%20berlangganan%20Paket%2030Mbps%20(Rp%20165.000/bulan).%20Apakah%20area%20saya%20sudah%20tercover%3F" class="order-btn" target="_blank">
-            Pesan Sekarang via WA
-        </a>
+        <!-- Tombol buka modal -->
+        <button class="order-btn" onclick="openModal('pesan')">
+            Pesan Sekarang
+        </button>
     </div>
 </section>
 
@@ -553,11 +635,135 @@
 </footer>
 
 <!-- FLOATING WA BUTTON -->
-<a href="https://wa.me/6285889046739?text=Halo%20Soca%20Wifi,%20saya%20tertarik%20dengan%20layanan%20internetnya." class="wa-float" target="_blank">
+<button class="wa-float" onclick="openModal('pesan')">
     <svg width="35" height="35" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
-</a>
+</button>
+
+<!-- MODAL FORM (PESAN / LAPOR) -->
+<div class="modal-overlay" id="formModal">
+    <div class="modal-content">
+        <button class="close-modal" onclick="closeModal()">×</button>
+        <h2 id="modalTitle">Formulir Pemesanan</h2>
+        <p class="subtitle" id="modalSubtitle">Isi data diri Anda untuk melanjutkan ke WhatsApp.</p>
+        
+        <form id="waForm" onsubmit="submitToWA(event)">
+            <!-- Data Diri -->
+            <div class="form-group">
+                <label>Nama Lengkap *</label>
+                <input type="text" id="custName" placeholder="Masukkan nama Anda" required>
+            </div>
+            <div class="form-group">
+                <label>No. WhatsApp *</label>
+                <input type="tel" id="custPhone" placeholder="Contoh: 08123456789" required>
+            </div>
+            <div class="form-group">
+                <label>Alamat Lengkap *</label>
+                <textarea id="custAddress" rows="2" placeholder="Nama jalan, RT/RW, kelurahan, kecamatan" required></textarea>
+            </div>
+            
+            <!-- Field tambahan khusus Lapor Gangguan -->
+            <div class="form-group" id="problemGroup" style="display: none;">
+                <label>Detail Kendala *</label>
+                <textarea id="custProblem" rows="3" placeholder="Contoh: Internet mati total sejak pagi, lampu router merah."></textarea>
+            </div>
+            
+            <button type="submit" class="submit-btn" id="submitBtn">Lanjut ke WhatsApp</button>
+        </form>
+    </div>
+</div>
 
 <script>
+    const WA_NUMBER = "6285889046739";
+    let currentMode = 'pesan'; // 'pesan' atau 'lapor'
+
+    // Buka Modal
+    function openModal(mode) {
+        currentMode = mode;
+        const modal = document.getElementById('formModal');
+        const title = document.getElementById('modalTitle');
+        const subtitle = document.getElementById('modalSubtitle');
+        const problemGroup = document.getElementById('problemGroup');
+        const problemInput = document.getElementById('custProblem');
+        const submitBtn = document.getElementById('submitBtn');
+
+        // Reset form tiap buka
+        document.getElementById('waForm').reset();
+
+        if (mode === 'lapor') {
+            title.innerText = "Lapor Gangguan Jaringan";
+            subtitle.innerText = "Mohon isi data di bawah ini agar teknisi kami bisa segera meluncur.";
+            problemGroup.style.display = 'block';
+            problemInput.setAttribute('required', 'true');
+            submitBtn.classList.add('danger');
+            submitBtn.innerText = "Kirim Laporan via WA";
+        } else {
+            title.innerText = "Formulir Pemesanan";
+            subtitle.innerText = "Isi data diri Anda untuk melanjutkan ke WhatsApp.";
+            problemGroup.style.display = 'none';
+            problemInput.removeAttribute('required');
+            submitBtn.classList.remove('danger');
+            submitBtn.innerText = "Lanjut ke WhatsApp";
+        }
+
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden'; // Cegah scroll background
+    }
+
+    // Tutup Modal
+    function closeModal() {
+        document.getElementById('formModal').classList.remove('active');
+        document.body.style.overflow = 'auto';
+    }
+
+    // Klik di luar modal buat nutup
+    document.getElementById('formModal').addEventListener('click', function(e) {
+        if (e.target === this) closeModal();
+    });
+
+    // Submit Form -> Arahkan ke WA
+    function submitToWA(e) {
+        e.preventDefault(); // Tahan form biar gak reload halaman
+
+        const name = document.getElementById('custName').value.trim();
+        const phone = document.getElementById('custPhone').value.trim();
+        const address = document.getElementById('custAddress').value.trim();
+        const problem = document.getElementById('custProblem').value.trim();
+
+        let message = "";
+
+        if (currentMode === 'lapor') {
+            // Format Pesan Lapor Gangguan
+            message = `*🚨 LAPORAN GANGGUAN - SOCA WIFI*%0A`;
+            message += `━━━━━━━━━━━━━━━━━━━━%0A`;
+            message += `*Nama:* ${name}%0A`;
+            message += `*No. HP:* ${phone}%0A`;
+            message += `*Alamat:* ${address}%0A`;
+            message += `━━━━━━━━━━━━━━━━━━━━%0A`;
+            message += `*📝 Detail Kendala:*%0A${problem}%0A`;
+            message += `━━━━━━━━━━━━━━━━━━━━%0A`;
+            message += `Mohon segera dicek ya kak. Terima kasih.`;
+        } else {
+            // Format Pesan Pemesanan
+            message = `*🛒 PEMESANAN BARU - SOCA WIFI*%0A`;
+            message += `━━━━━━━━━━━━━━━━━━━━%0A`;
+            message += `*Nama:* ${name}%0A`;
+            message += `*No. HP:* ${phone}%0A`;
+            message += `*Alamat:* ${address}%0A`;
+            message += `━━━━━━━━━━━━━━━━━━━━%0A`;
+            message += `*Paket yang diminati:*%0A`;
+            message += `• Paket 30 Mbps (Rp 165.000/bulan)%0A`;
+            message += `━━━━━━━━━━━━━━━━━━━━%0A`;
+            message += `Apakah area saya sudah tercover jaringan Soca Wifi? Mohon info selanjutnya.`;
+        }
+
+        // Buka WA
+        const waUrl = `https://wa.me/${WA_NUMBER}?text=${message}`;
+        window.open(waUrl, '_blank');
+
+        // Tutup modal
+        closeModal();
+    }
+
     // Fungsi Simulasi Cek Coverage
     function checkCoverage() {
         const area = document.getElementById('areaInput').value;
@@ -574,11 +780,9 @@
         result.style.color = 'var(--text-muted)';
         result.innerText = '⏳ Sedang memeriksa jaringan...';
 
-        // Simulasi loading 1.5 detik
         setTimeout(() => {
-            // Karena ini web portofolio, kita buat selalu tersedia atau random
             result.style.color = '#25d366';
-            result.innerHTML = `✅ Selamat! Area <b>${area}</b> sudah tercover jaringan SOCA WIFI. Silakan hubungi kami untuk pemasangan.`;
+            result.innerHTML = `✅ Selamat! Area <b>${area}</b> sudah tercover jaringan SOCA WIFI. Silakan isi form pesanan.`;
         }, 1500);
     }
 </script>
