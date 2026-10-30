@@ -7,524 +7,92 @@
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
 <style>
     :root {
-        --primary: #00e5ff;
-        --secondary: #0055ff;
-        --bg-dark: #0a1128;
-        --bg-card: #111c3a;
-        --text-light: #e2e8f0;
-        --text-muted: #94a3b8;
-        --wa-green: #25d366;
-        --danger: #ff4757;
-        --success: #2ed573;
+        --primary: #00e5ff; --secondary: #0055ff; --bg-dark: #0a1128;
+        --bg-card: #111c3a; --text-light: #e2e8f0; --text-muted: #94a3b8;
+        --wa-green: #25d366; --danger: #ff4757; --success: #2ed573;
     }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Outfit', sans-serif; scroll-behavior: smooth; }
+    body { background-color: var(--bg-dark); color: var(--text-light); overflow-x: hidden; }
 
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: 'Outfit', sans-serif;
-        -webkit-tap-highlight-color: transparent;
-        scroll-behavior: smooth;
-    }
+    /* ANIMASI */
+    @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes pulse-glow { 0% { box-shadow: 0 0 0 0 rgba(0,229,255,0.4); } 70% { box-shadow: 0 0 0 15px rgba(0,229,255,0); } 100% { box-shadow: 0 0 0 0 rgba(0,229,255,0); } }
+    @keyframes bounce { 0%, 20%, 50%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-10px); } 60% { transform: translateY(-5px); } }
 
-    body {
-        background-color: var(--bg-dark);
-        color: var(--text-light);
-        overflow-x: hidden;
-    }
-
-    @keyframes float {
-        0% { transform: translateY(0px); }
-        50% { transform: translateY(-15px); }
-        100% { transform: translateY(0px); }
-    }
-
-    @keyframes fadeUp {
-        from { opacity: 0; transform: translateY(40px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes pulse-glow {
-        0% { box-shadow: 0 0 0 0 rgba(0, 229, 255, 0.4); }
-        70% { box-shadow: 0 0 0 15px rgba(0, 229, 255, 0); }
-        100% { box-shadow: 0 0 0 0 rgba(0, 229, 255, 0); }
-    }
-
-    nav {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 20px 5%;
-        position: absolute;
-        top: 0; left: 0; width: 100%;
-        z-index: 100;
-    }
-
-    .logo {
-        font-size: 24px;
-        font-weight: 900;
-        color: white;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        letter-spacing: 1px;
-    }
-
+    /* NAVBAR */
+    nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 5%; position: absolute; top: 0; left: 0; width: 100%; z-index: 100; }
+    .logo { font-size: 24px; font-weight: 900; color: white; display: flex; align-items: center; gap: 8px; }
     .logo span { color: var(--primary); }
+    .nav-links { display: flex; gap: 10px; }
+    .nav-btn { background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.2); padding: 8px 16px; border-radius: 50px; font-weight: 600; font-size: 13px; cursor: pointer; transition: 0.3s; }
+    .nav-btn:hover { background: var(--primary); color: var(--bg-dark); }
+    .nav-btn.danger { color: var(--danger); border-color: var(--danger); }
+    .nav-btn.danger:hover { background: var(--danger); color: white; }
 
-    .nav-links {
-        display: flex;
-        gap: 15px;
-        align-items: center;
-    }
+    /* HERO */
+    .hero { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 100px 5% 40px; position: relative; background: radial-gradient(circle at top right, #1a2a6c, #0a1128 60%); overflow: hidden; }
+    .glow-1, .glow-2 { position: absolute; filter: blur(150px); border-radius: 50%; }
+    .glow-1 { top: 10%; right: -10%; width: 400px; height: 400px; background: var(--secondary); opacity: 0.3; }
+    .glow-2 { bottom: -10%; left: -10%; width: 300px; height: 300px; background: var(--primary); opacity: 0.2; }
+    .hero-content { text-align: center; max-width: 800px; position: relative; z-index: 2; animation: fadeUp 1s ease-out; margin-bottom: 30px; }
+    .hero-tagline { display: inline-block; background: rgba(0,229,255,0.1); color: var(--primary); padding: 8px 16px; border-radius: 50px; font-weight: 600; font-size: 13px; margin-bottom: 20px; border: 1px solid rgba(0,229,255,0.3); }
+    .hero h1 { font-size: 42px; font-weight: 900; line-height: 1.1; margin-bottom: 20px; }
+    .hero h1 span { background: linear-gradient(90deg, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .hero p { font-size: 16px; color: var(--text-muted); margin-bottom: 30px; line-height: 1.6; }
+    .router-img { width: 70%; max-width: 320px; animation: float 4s ease-in-out infinite; border-radius: 30px; margin-top: 20px; }
+    .scroll-indicator { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 5px; color: var(--primary); font-size: 12px; font-weight: 600; letter-spacing: 1px; cursor: pointer; z-index: 10; }
+    .scroll-arrow { font-size: 20px; animation: bounce 2s infinite; }
 
-    .nav-btn {
-        background: rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(10px);
-        color: white;
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        padding: 10px 20px;
-        border-radius: 50px;
-        font-weight: 600;
-        font-size: 14px;
-        text-decoration: none;
-        transition: 0.3s;
-        cursor: pointer;
-    }
+    /* SECTION TITLE */
+    .section-title { text-align: center; margin-bottom: 40px; }
+    .section-title h2 { font-size: 28px; font-weight: 800; }
+    .section-title p { color: var(--text-muted); font-size: 14px; }
 
-    .nav-btn:hover {
-        background: var(--primary);
-        color: var(--bg-dark);
-        border-color: var(--primary);
-    }
+    /* FITUR */
+    .features { padding: 60px 5%; background: var(--bg-dark); }
+    .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; max-width: 1000px; margin: 0 auto; }
+    .feature-card { background: var(--bg-card); padding: 25px 15px; border-radius: 20px; text-align: center; border: 1px solid rgba(255,255,255,0.05); }
+    .feature-icon { font-size: 35px; margin-bottom: 10px; }
+    .feature-card h3 { font-size: 16px; margin-bottom: 8px; }
+    .feature-card p { font-size: 13px; color: var(--text-muted); }
 
-    .nav-btn.danger {
-        background: rgba(255, 71, 87, 0.1);
-        color: var(--danger);
-        border-color: rgba(255, 71, 87, 0.3);
-    }
-    .nav-btn.danger:hover {
-        background: var(--danger);
-        color: white;
-    }
+    /* PRICING */
+    .pricing { padding: 60px 5%; background: linear-gradient(180deg, var(--bg-dark) 0%, #0d1530 100%); }
+    .price-card { background: var(--bg-card); max-width: 350px; margin: 0 auto; border-radius: 24px; padding: 30px 20px; text-align: center; position: relative; border: 2px solid var(--primary); animation: pulse-glow 3s infinite; }
+    .price-badge { position: absolute; top: -15px; left: 50%; transform: translateX(-50%); background: linear-gradient(90deg, var(--primary), var(--secondary)); color: var(--bg-dark); padding: 6px 20px; border-radius: 50px; font-weight: 800; font-size: 12px; }
+    .speed-number { font-size: 50px; font-weight: 900; color: var(--primary); }
+    .speed-unit { font-size: 18px; color: var(--text-muted); }
+    .price-box { margin: 20px 0; padding: 15px 0; border-top: 1px dashed rgba(255,255,255,0.1); border-bottom: 1px dashed rgba(255,255,255,0.1); }
+    .price-amount { font-size: 40px; font-weight: 900; }
+    .benefit-list { text-align: left; list-style: none; margin-bottom: 20px; }
+    .benefit-list li { margin-bottom: 10px; font-size: 13px; display: flex; gap: 10px; }
+    .benefit-list li::before { content: '✅'; }
+    .order-btn { display: block; width: 100%; background: linear-gradient(90deg, var(--primary), var(--secondary)); color: white; padding: 14px; border-radius: 50px; font-weight: 800; border: none; cursor: pointer; }
 
-    .hero {
-        min-height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 100px 5% 50px;
-        position: relative;
-        background: radial-gradient(circle at top right, #1a2a6c, #0a1128 60%);
-        overflow: hidden;
-    }
+    /* COVERAGE */
+    .coverage { padding: 40px 5%; background: var(--bg-card); text-align: center; margin: 0 5%; border-radius: 24px; }
+    .coverage-box { max-width: 500px; margin: 20px auto; display: flex; gap: 10px; }
+    .coverage-box input { flex: 1; padding: 14px 20px; border-radius: 50px; border: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.2); color: white; outline: none; }
+    .coverage-box button { background: var(--primary); border: none; padding: 0 20px; border-radius: 50px; font-weight: 800; cursor: pointer; }
+    .coverage-result { margin-top: 20px; padding: 20px; border-radius: 20px; background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.1); display: none; }
 
-    .glow-1 {
-        position: absolute; top: 10%; right: -10%; width: 400px; height: 400px;
-        background: var(--secondary); filter: blur(150px); opacity: 0.3; border-radius: 50%;
-    }
-    .glow-2 {
-        position: absolute; bottom: -10%; left: -10%; width: 300px; height: 300px;
-        background: var(--primary); filter: blur(150px); opacity: 0.2; border-radius: 50%;
-    }
-
-    .hero-content {
-        text-align: center;
-        max-width: 800px;
-        position: relative;
-        z-index: 2;
-        animation: fadeUp 1s ease-out;
-    }
-
-    .hero-tagline {
-        display: inline-block;
-        background: rgba(0, 229, 255, 0.1);
-        color: var(--primary);
-        padding: 8px 16px;
-        border-radius: 50px;
-        font-weight: 600;
-        font-size: 14px;
-        margin-bottom: 20px;
-        border: 1px solid rgba(0, 229, 255, 0.3);
-    }
-
-    .hero h1 {
-        font-size: 48px;
-        font-weight: 900;
-        line-height: 1.1;
-        margin-bottom: 20px;
-    }
-
-    @media (max-width: 768px) {
-        .hero h1 { font-size: 36px; }
-    }
-
-    .hero h1 span {
-        background: linear-gradient(90deg, var(--primary), var(--secondary));
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-    }
-
-    .hero p {
-        font-size: 18px;
-        color: var(--text-muted);
-        margin-bottom: 30px;
-        line-height: 1.6;
-    }
-
-    .hero-img-container {
-        margin-top: 40px;
-        position: relative;
-        display: flex;
-        justify-content: center;
-    }
-
-    .router-img {
-        width: 80%;
-        max-width: 400px;
-        animation: float 4s ease-in-out infinite;
-        filter: drop-shadow(0 20px 30px rgba(0,0,0,0.5));
-        border-radius: 30px;
-    }
-
-    .features {
-        padding: 80px 5%;
-        background: var(--bg-dark);
-    }
-
-    .section-title {
-        text-align: center;
-        margin-bottom: 50px;
-    }
-
-    .section-title h2 {
-        font-size: 32px;
-        font-weight: 800;
-        margin-bottom: 10px;
-    }
-
-    .section-title p {
-        color: var(--text-muted);
-    }
-
-    .feature-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 20px;
-        max-width: 1000px;
-        margin: 0 auto;
-    }
-
-    .feature-card {
-        background: var(--bg-card);
-        padding: 30px 20px;
-        border-radius: 20px;
-        text-align: center;
-        border: 1px solid rgba(255,255,255,0.05);
-        transition: 0.3s;
-    }
-
-    .feature-card:hover {
-        transform: translateY(-5px);
-        border-color: var(--primary);
-    }
-
-    .feature-icon {
-        font-size: 40px;
-        margin-bottom: 15px;
-    }
-
-    .feature-card h3 {
-        font-size: 18px;
-        margin-bottom: 10px;
-    }
-
-    .feature-card p {
-        font-size: 14px;
-        color: var(--text-muted);
-        line-height: 1.5;
-    }
-
-    .pricing {
-        padding: 80px 5%;
-        background: linear-gradient(180deg, var(--bg-dark) 0%, #0d1530 100%);
-    }
-
-    .price-card {
-        background: var(--bg-card);
-        max-width: 400px;
-        margin: 0 auto;
-        border-radius: 30px;
-        padding: 40px 30px;
-        text-align: center;
-        position: relative;
-        border: 2px solid var(--primary);
-        box-shadow: 0 0 40px rgba(0, 229, 255, 0.1);
-        animation: pulse-glow 3s infinite;
-    }
-
-    .price-badge {
-        position: absolute;
-        top: -15px; left: 50%;
-        transform: translateX(-50%);
-        background: linear-gradient(90deg, var(--primary), var(--secondary));
-        color: var(--bg-dark);
-        padding: 8px 25px;
-        border-radius: 50px;
-        font-weight: 800;
-        font-size: 14px;
-        letter-spacing: 1px;
-    }
-
-    .speed-box { margin: 20px 0; }
-    .speed-number { font-size: 60px; font-weight: 900; line-height: 1; color: var(--primary); }
-    .speed-unit { font-size: 20px; font-weight: 600; color: var(--text-muted); }
-
-    .price-box {
-        margin: 30px 0;
-        padding: 20px 0;
-        border-top: 1px dashed rgba(255,255,255,0.1);
-        border-bottom: 1px dashed rgba(255,255,255,0.1);
-    }
-
-    .price-currency { font-size: 20px; font-weight: 600; vertical-align: top; color: var(--text-muted); }
-    .price-amount { font-size: 48px; font-weight: 900; color: white; }
-    .price-period { font-size: 16px; color: var(--text-muted); }
-
-    .benefit-list {
-        text-align: left;
-        list-style: none;
-        margin-bottom: 30px;
-    }
-
-    .benefit-list li {
-        margin-bottom: 12px;
-        font-size: 15px;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
-
-    .benefit-list li::before { content: '✅'; font-size: 16px; }
-
-    .order-btn {
-        display: block;
-        width: 100%;
-        background: linear-gradient(90deg, var(--primary), var(--secondary));
-        color: white;
-        text-decoration: none;
-        padding: 16px;
-        border-radius: 50px;
-        font-weight: 800;
-        font-size: 16px;
-        transition: 0.3s;
-        box-shadow: 0 10px 20px rgba(0, 229, 255, 0.3);
-        border: none;
-        cursor: pointer;
-    }
-
-    .order-btn:hover {
-        transform: scale(1.05);
-        box-shadow: 0 15px 30px rgba(0, 229, 255, 0.5);
-    }
-
-    .coverage {
-        padding: 60px 5%;
-        background: var(--bg-card);
-        text-align: center;
-        margin: 40px 5%;
-        border-radius: 30px;
-        border: 1px solid rgba(255,255,255,0.05);
-    }
-
-    .coverage h2 { font-size: 24px; margin-bottom: 10px; }
-    .coverage p.subtitle { font-size: 14px; color: var(--text-muted); margin-bottom: 20px; }
-
-    .coverage-box {
-        max-width: 500px;
-        margin: 0 auto;
-        display: flex;
-        gap: 10px;
-    }
-
-    .coverage-box input {
-        flex: 1;
-        padding: 15px 20px;
-        border-radius: 50px;
-        border: 1px solid rgba(255,255,255,0.1);
-        background: rgba(0,0,0,0.2);
-        color: white;
-        font-size: 15px;
-        outline: none;
-    }
-
-    .coverage-box input:focus { border-color: var(--primary); }
-
-    .coverage-box button {
-        background: var(--primary);
-        color: var(--bg-dark);
-        border: none;
-        padding: 0 25px;
-        border-radius: 50px;
-        font-weight: 800;
-        cursor: pointer;
-        transition: 0.3s;
-    }
-
-    .coverage-box button:hover { background: white; }
-
-    .coverage-result {
-        margin-top: 20px;
-        font-size: 15px;
-        font-weight: 600;
-        display: none;
-        padding: 20px;
-        border-radius: 20px;
-        background: rgba(0,0,0,0.2);
-        border: 1px solid rgba(255,255,255,0.1);
-    }
-
-    .modal-overlay {
-        display: none;
-        position: fixed;
-        top: 0; left: 0; width: 100%; height: 100%;
-        background: rgba(10, 17, 40, 0.8);
-        backdrop-filter: blur(8px);
-        z-index: 9999;
-        align-items: center;
-        justify-content: center;
-        padding: 20px;
-    }
-
+    /* MODAL */
+    .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(10,17,40,0.8); backdrop-filter: blur(8px); z-index: 9999; align-items: center; justify-content: center; padding: 20px; }
     .modal-overlay.active { display: flex; }
+    .modal-content { background: var(--bg-card); width: 100%; max-width: 400px; border-radius: 24px; padding: 25px; position: relative; animation: fadeUp 0.4s ease-out; }
+    .close-modal { position: absolute; top: 15px; right: 20px; background: none; border: none; color: var(--text-muted); font-size: 24px; cursor: pointer; }
+    .modal-content h2 { font-size: 20px; margin-bottom: 5px; }
+    .modal-content p.subtitle { font-size: 12px; color: var(--text-muted); margin-bottom: 20px; }
+    .form-group { margin-bottom: 12px; text-align: left; }
+    .form-group label { display: block; font-size: 12px; font-weight: 600; margin-bottom: 5px; }
+    .form-group input, .form-group textarea { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.2); color: white; outline: none; font-family: 'Outfit', sans-serif; }
+    .submit-btn { width: 100%; background: var(--primary); color: var(--bg-dark); border: none; padding: 14px; border-radius: 10px; font-weight: 800; cursor: pointer; margin-top: 10px; }
+    .submit-btn.danger { background: var(--danger); color: white; }
 
-    .modal-content {
-        background: var(--bg-card);
-        width: 100%;
-        max-width: 450px;
-        border-radius: 24px;
-        padding: 30px;
-        border: 1px solid rgba(0, 229, 255, 0.3);
-        box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-        position: relative;
-        animation: fadeUp 0.4s ease-out;
-    }
-
-    .close-modal {
-        position: absolute;
-        top: 15px; right: 20px;
-        background: none;
-        border: none;
-        color: var(--text-muted);
-        font-size: 24px;
-        cursor: pointer;
-    }
-
-    .modal-content h2 {
-        font-size: 22px;
-        margin-bottom: 5px;
-        color: white;
-    }
-
-    .modal-content p.subtitle {
-        font-size: 13px;
-        color: var(--text-muted);
-        margin-bottom: 20px;
-    }
-
-    .form-group {
-        margin-bottom: 15px;
-        text-align: left;
-    }
-
-    .form-group label {
-        display: block;
-        font-size: 13px;
-        font-weight: 600;
-        margin-bottom: 8px;
-        color: var(--text-light);
-    }
-
-    .form-group input, .form-group textarea {
-        width: 100%;
-        padding: 12px 15px;
-        border-radius: 12px;
-        border: 1px solid rgba(255,255,255,0.1);
-        background: rgba(0,0,0,0.2);
-        color: white;
-        font-family: 'Outfit', sans-serif;
-        font-size: 14px;
-        outline: none;
-        transition: 0.3s;
-    }
-
-    .form-group input:focus, .form-group textarea:focus {
-        border-color: var(--primary);
-        background: rgba(0, 229, 255, 0.05);
-    }
-
-    .submit-btn {
-        width: 100%;
-        background: var(--primary);
-        color: var(--bg-dark);
-        border: none;
-        padding: 15px;
-        border-radius: 12px;
-        font-weight: 800;
-        font-size: 15px;
-        cursor: pointer;
-        margin-top: 10px;
-        transition: 0.3s;
-    }
-
-    .submit-btn:hover {
-        background: white;
-        transform: scale(1.02);
-    }
-    
-    .submit-btn.danger {
-        background: var(--danger);
-        color: white;
-    }
-    
-    .submit-btn.danger:hover {
-        background: #ff6b81;
-    }
-
-    footer {
-        text-align: center;
-        padding: 40px 20px;
-        background: #050a18;
-        border-top: 1px solid rgba(255,255,255,0.05);
-    }
-
-    footer .logo { justify-content: center; margin-bottom: 10px; }
-    footer p { color: var(--text-muted); font-size: 13px; }
-
-    .wa-float {
-        position: fixed;
-        bottom: 30px;
-        right: 30px;
-        background: var(--wa-green);
-        color: white;
-        width: 60px;
-        height: 60px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 30px;
-        text-decoration: none;
-        box-shadow: 0 10px 20px rgba(37, 211, 102, 0.4);
-        z-index: 1000;
-        transition: 0.3s;
-        animation: float 3s ease-in-out infinite;
-        cursor: pointer;
-        border: none;
-    }
-
-    .wa-float:hover { transform: scale(1.1); }
-
+    /* FOOTER & WA FLOAT */
+    footer { text-align: center; padding: 30px; background: #050a18; color: var(--text-muted); font-size: 12px; }
+    .wa-float { position: fixed; bottom: 20px; right: 20px; background: var(--wa-green); width: 55px; height: 55px; border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 1000; border: none; cursor: pointer; animation: float 3s infinite; }
 </style>
 </head>
 <body>
@@ -538,126 +106,72 @@
 </nav>
 
 <section class="hero">
-    <div class="glow-1"></div>
-    <div class="glow-2"></div>
+    <div class="glow-1"></div><div class="glow-2"></div>
     <div class="hero-content">
         <div class="hero-tagline">🔥 Promo Pemasangan Gratis Bulan Ini!</div>
         <h1>Internet Ngebut,<br>Harga <span>Lebih Murah.</span></h1>
-        <p>Solusi internet rumah tanpa batas (Unlimited) tanpa FUP. Streaming lancar, main game tanpa lag, dan kerja jadi lebih produktif bersama Soca Wifi.</p>
-        
-        <div class="hero-img-container">
-            <img src="https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?q=80&w=800&auto=format&fit=crop" alt="Router Wifi" class="router-img">
-        </div>
+        <p>Solusi internet rumah tanpa batas (Unlimited) tanpa FUP. Streaming lancar, main game tanpa lag.</p>
+        <img src="https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?q=80&w=800&auto=format&fit=crop" class="router-img">
+    </div>
+    <div class="scroll-indicator" onclick="document.getElementById('paket').scrollIntoView();">
+        <span>Scroll ke Bawah</span><div class="scroll-arrow">↓</div>
     </div>
 </section>
 
 <section class="features">
-    <div class="section-title">
-        <h2>Kenapa Pilih Soca Wifi?</h2>
-        <p>Kualitas jaringan yang stabil dan layanan yang cepat tanggap.</p>
-    </div>
+    <div class="section-title"><h2>Kenapa Pilih Soca Wifi?</h2></div>
     <div class="feature-grid">
-        <div class="feature-card">
-            <div class="feature-icon">🚀</div>
-            <h3>Koneksi Stabil</h3>
-            <p>Jaringan fiber optic yang stabil untuk kebutuhan harian keluarga Anda.</p>
-        </div>
-        <div class="feature-card">
-            <div class="feature-icon">♾️</div>
-            <h3>Unlimited Tanpa FUP</h3>
-            <p>Bebas download dan streaming sepuasnya tanpa takut kena limit kuota.</p>
-        </div>
-        <div class="feature-card">
-            <div class="feature-icon">🔧</div>
-            <h3>Gratis Pemasangan</h3>
-            <p>Biaya instalasi gratis (S&K berlaku) untuk pelanggan baru.</p>
-        </div>
-        <div class="feature-card">
-            <div class="feature-icon">📞</div>
-            <h3>Support 24/7</h3>
-            <p>Tim teknis kami siap membantu jika ada kendala jaringan.</p>
-        </div>
+        <div class="feature-card"><div class="feature-icon">🚀</div><h3>Koneksi Stabil</h3><p>Jaringan fiber optic handal.</p></div>
+        <div class="feature-card"><div class="feature-icon">♾️</div><h3>Unlimited</h3><p>Tanpa FUP dan batas kuota.</p></div>
+        <div class="feature-card"><div class="feature-icon">🔧</div><h3>Gratis Pasang</h3><p>Biaya instalasi gratis (S&K).</p></div>
+        <div class="feature-card"><div class="feature-icon">📞</div><h3>Support 24/7</h3><p>Tim teknis siap membantu.</p></div>
     </div>
 </section>
 
 <section class="pricing" id="paket">
-    <div class="section-title">
-        <h2>Pilihan Paket</h2>
-        <p>Harga terjangkau, kualitas tidak kaleng-kaleng.</p>
-    </div>
-    
+    <div class="section-title"><h2>Pilihan Paket</h2></div>
     <div class="price-card">
         <div class="price-badge">PALING LARIS</div>
-        <div class="speed-box">
-            <span class="speed-number">30</span>
-            <span class="speed-unit">Mbps</span>
-        </div>
-        <div class="price-box">
-            <span class="price-currency">Rp</span>
-            <span class="price-amount">165</span>
-            <span class="price-currency">rb</span>
-            <span class="price-period">/ bulan</span>
-        </div>
+        <div><span class="speed-number">30</span><span class="speed-unit">Mbps</span></div>
+        <div class="price-box"><span class="price-amount">Rp 165rb</span> <span>/ bulan</span></div>
         <ul class="benefit-list">
             <li>Kecepatan hingga 30 Mbps</li>
             <li>Unlimited Tanpa FUP</li>
-            <li>Gratis Pemasangan (S&K)</li>
+            <li>Gratis Pemasangan</li>
             <li>Support 24/7 Jam</li>
-            <li>Cocok untuk 3-5 Perangkat</li>
         </ul>
-        
-        <button class="order-btn" onclick="openModal('pesan')">
-            Pesan Sekarang
-        </button>
+        <button class="order-btn" onclick="openModal('pesan')">Pesan Sekarang</button>
     </div>
 </section>
 
 <section class="coverage">
     <h2>Cek Ketersediaan Alamat</h2>
-    <p class="subtitle">Ketik alamat lengkap Anda untuk mengecek ketersediaan jaringan.</p>
-    
+    <p style="font-size:13px; color:var(--text-muted);">Ketik alamat lengkap Anda untuk mengecek jaringan.</p>
     <div class="coverage-box" id="inputAreaBox">
-        <input type="text" id="inputAlamat" placeholder="Contoh: Jl. Merdeka No. 10, Sukamaju...">
-        <button onclick="prosesCekAlamat()">Cek Area</button>
+        <input type="text" id="inputAlamat" placeholder="Ketik alamat Anda...">
+        <button onclick="prosesCekAlamat()">Cek</button>
     </div>
-
     <div id="coverageResult" class="coverage-result"></div>
 </section>
 
 <footer>
-    <div class="logo">📡 SOCA<span>WIFI</span></div>
     <p>&copy; 2024 Soca Wifi Provider. Jaringan Cepat, Harga Bersahabat.</p>
 </footer>
 
 <button class="wa-float" onclick="openModal('pesan')">
-    <svg width="35" height="35" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+    <svg width="30" height="30" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
 </button>
 
 <div class="modal-overlay" id="formModal">
     <div class="modal-content">
         <button class="close-modal" onclick="closeModal()">×</button>
-        <h2 id="modalTitle">Formulir Pemesanan</h2>
-        <p class="subtitle" id="modalSubtitle">Isi data diri Anda untuk melanjutkan ke WhatsApp.</p>
-        
+        <h2 id="modalTitle">Formulir</h2>
+        <p class="subtitle" id="modalSubtitle">Isi data diri Anda.</p>
         <form id="waForm" onsubmit="submitForm(event)">
-            <div class="form-group">
-                <label>Nama Lengkap *</label>
-                <input type="text" id="custName" placeholder="Masukkan nama Anda" required>
-            </div>
-            <div class="form-group">
-                <label>No. WhatsApp *</label>
-                <input type="tel" id="custPhone" placeholder="Contoh: 08123456789" required>
-            </div>
-            <div class="form-group">
-                <label>Alamat Lengkap *</label>
-                <textarea id="custAddress" rows="2" placeholder="Nama jalan, RT/RW, kelurahan, kecamatan" required></textarea>
-            </div>
-            
-            <div class="form-group" id="problemGroup" style="display: none;">
-                <label>Detail Kendala *</label>
-                <textarea id="custProblem" rows="3" placeholder="Contoh: Internet mati total sejak pagi."></textarea>
-            </div>
-            
+            <div class="form-group"><label>Nama Lengkap *</label><input type="text" id="custName" required></div>
+            <div class="form-group"><label>No. WhatsApp *</label><input type="tel" id="custPhone" required></div>
+            <div class="form-group"><label>Alamat Lengkap *</label><textarea id="custAddress" rows="2" required></textarea></div>
+            <div class="form-group" id="problemGroup" style="display: none;"><label>Detail Kendala *</label><textarea id="custProblem" rows="2"></textarea></div>
             <button type="submit" class="submit-btn" id="submitBtn">Lanjut ke WhatsApp</button>
         </form>
     </div>
@@ -665,7 +179,7 @@
 
 <script>
     const WA_NUMBER = "6285889046739";
-    let currentMode = 'pesan'; 
+    let currentMode = 'pesan';
 
     function openModal(mode) {
         currentMode = mode;
@@ -680,24 +194,23 @@
         document.getElementById('waForm').reset();
 
         if (mode === 'lapor') {
-            title.innerText = "Lapor Gangguan Jaringan";
-            subtitle.innerText = "Isi data di bawah agar teknisi kami bisa segera meluncur.";
+            title.innerText = "Lapor Gangguan";
+            subtitle.innerText = "Isi data agar teknisi segera meluncur.";
             problemGroup.style.display = 'block';
             problemInput.setAttribute('required', 'true');
             submitBtn.classList.add('danger');
             submitBtn.innerText = "Kirim Laporan via WA";
         } else if (mode === 'cek_area') {
             title.innerText = "Form Cek Area";
-            subtitle.innerText = "Isi alamat lengkap Anda agar kami bisa memverifikasi ketersediaan jaringan.";
+            subtitle.innerText = "Verifikasi ketersediaan jaringan.";
             problemGroup.style.display = 'none';
             submitBtn.classList.remove('danger');
-            submitBtn.innerText = "Cek Ketersediaan Sekarang";
-            
+            submitBtn.innerText = "Cek Sekarang";
             const alamatAwal = document.getElementById('inputAlamat').value;
             if(alamatAwal) addressInput.value = alamatAwal;
         } else {
             title.innerText = "Formulir Pemesanan";
-            subtitle.innerText = "Isi data diri Anda untuk melanjutkan ke WhatsApp.";
+            subtitle.innerText = "Lanjutkan ke WhatsApp.";
             problemGroup.style.display = 'none';
             submitBtn.classList.remove('danger');
             submitBtn.innerText = "Lanjut ke WhatsApp";
@@ -718,16 +231,68 @@
 
     function prosesCekAlamat() {
         const alamat = document.getElementById('inputAlamat').value.trim();
-        if (!alamat) {
-            alert('Silakan ketik alamat Anda terlebih dahulu di kolom.');
-            return;
-        }
+        if (!alamat) { alert('Silakan ketik alamat Anda!'); return; }
         openModal('cek_area');
+    }
+
+    // === GENERATOR FORMAT WA ESTETIK ===
+    function generateWAMessage(mode, name, phone, address, problem = '') {
+        const date = new Date();
+        const waktu = date.toLocaleString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+        const trxId = 'SOCA-' + Math.floor(Math.random() * 900000 + 100000);
+        let msg = "";
+
+        if (mode === 'lapor') {
+            msg = `🔴 *LAPORAN GANGGUAN JARINGAN* 🔴\n`;
+            msg += `_Soca Wifi - Layanan Pelanggan_\n`;
+            msg += `━━━━━━━━━━━━━━━━━━━━━━\n\n`;
+            msg += `🆔 *ID Laporan:* ${trxId}\n`;
+            msg += `📅 *Waktu:* ${waktu}\n\n`;
+            msg += `👤 *DATA PELANGGAN*\n`;
+            msg += `├ Nama : *${name}*\n`;
+            msg += `├ No. HP : ${phone}\n`;
+            msg += `└ Alamat : ${address}\n\n`;
+            msg += `⚠️ *DETAIL KENDALA*\n`;
+            msg += `└ "${problem}"\n\n`;
+            msg += `━━━━━━━━━━━━━━━━━━━━━━\n`;
+            msg += `Mohon segera ditindaklanjuti ya kak. Terima kasih! 🙏`;
+        } 
+        else if (mode === 'pesan') {
+            msg = `🟢 *PEMESANAN BARU - SOCA WIFI* 🟢\n`;
+            msg += `_Solusi Internet Cepat & Stabil_\n`;
+            msg += `━━━━━━━━━━━━━━━━━━━━━━\n\n`;
+            msg += `🆔 *ID Pesanan:* ${trxId}\n`;
+            msg += `📅 *Waktu:* ${waktu}\n\n`;
+            msg += `👤 *DATA PEMBELI*\n`;
+            msg += `├ Nama : *${name}*\n`;
+            msg += `├ No. HP : ${phone}\n`;
+            msg += `└ Alamat : ${address}\n\n`;
+            msg += `📦 *DETAIL PAKET*\n`;
+            msg += `├ Paket : *30 Mbps Unlimited*\n`;
+            msg += `└ Harga : *Rp 165.000 / bulan*\n\n`;
+            msg += `━━━━━━━━━━━━━━━━━━━━━━\n`;
+            msg += `Mohon konfirmasi jadwal pemasangan ya kak. Terima kasih! 🙏`;
+        }
+        else if (mode === 'cek_area') {
+            msg = `✅ *HASIL CEK AREA - SOCA WIFI* ✅\n`;
+            msg += `━━━━━━━━━━━━━━━━━━━━━━\n\n`;
+            msg += `📅 *Waktu Cek:* ${waktu}\n\n`;
+            msg += `👤 *DATA PELANGGAN*\n`;
+            msg += `├ Nama : *${name}*\n`;
+            msg += `├ No. HP : ${phone}\n`;
+            msg += `└ Alamat : ${address}\n\n`;
+            msg += `📡 *STATUS JARINGAN*\n`;
+            msg += `└ 🟢 *TERCOVER / TERSEDIA*\n\n`;
+            msg += `📦 *PAKET YANG DIMINATI*\n`;
+            msg += `└ *30 Mbps Unlimited* (Rp 165.000/bln)\n\n`;
+            msg += `━━━━━━━━━━━━━━━━━━━━━━\n`;
+            msg += `Mohon info selanjutnya ya kak. Terima kasih! 🙏`;
+        }
+        return encodeURIComponent(msg);
     }
 
     function submitForm(e) {
         e.preventDefault();
-
         const name = document.getElementById('custName').value.trim();
         const phone = document.getElementById('custPhone').value.trim();
         const address = document.getElementById('custAddress').value.trim();
@@ -739,24 +304,8 @@
             return;
         }
 
-        let message = "";
-        if (currentMode === 'lapor') {
-            message = `*🚨 LAPORAN GANGGUAN - SOCA WIFI*%0A`;
-            message += `━━━━━━━━━━━━━━━━━━━━%0A`;
-            message += `*Nama:* ${name}%0A*No. HP:* ${phone}%0A*Alamat:* ${address}%0A`;
-            message += `━━━━━━━━━━━━━━━━━━━━%0A`;
-            message += `*📝 Detail Kendala:*%0A${problem}%0A`;
-        } else {
-            message = `*🛒 PEMESANAN BARU - SOCA WIFI*%0A`;
-            message += `━━━━━━━━━━━━━━━━━━━━%0A`;
-            message += `*Nama:* ${name}%0A*No. HP:* ${phone}%0A*Alamat:* ${address}%0A`;
-            message += `━━━━━━━━━━━━━━━━━━━━%0A`;
-            message += `*Paket:* 30 Mbps (Rp 165.000/bulan)%0A`;
-        }
-        message += `━━━━━━━━━━━━━━━━━━━━%0A`;
-        message += `Mohon segera diproses ya kak. Terima kasih!`;
-
-        window.open(`https://wa.me/${WA_NUMBER}?text=${message}`, '_blank');
+        const waMessage = generateWAMessage(currentMode, name, phone, address, problem);
+        window.open(`https://wa.me/${WA_NUMBER}?text=${waMessage}`, '_blank');
         closeModal();
     }
 
@@ -766,20 +315,18 @@
         
         inputAreaBox.style.display = 'none';
         resultBox.style.display = 'block';
-        resultBox.style.color = 'var(--text-muted)';
-        resultBox.innerHTML = '⏳ Sedang memverifikasi jaringan di lokasi Anda...';
+        resultBox.innerHTML = '⏳ Memverifikasi jaringan...';
 
         setTimeout(() => {
-            resultBox.style.color = 'white';
+            // Hasil berhasil
             resultBox.innerHTML = `
-                <div style="font-size: 40px; margin-bottom: 10px;">✅</div>
-                <h3 style="color: var(--success); margin-bottom: 5px;">Kabar Baik! Area Anda Tercover</h3>
-                <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 20px;">
-                    Jaringan Soca Wifi sudah tersedia di alamat <b>${address}</b>. 
-                    Silakan lanjutkan pemesanan dengan menekan tombol di bawah.
+                <div style="font-size: 30px; margin-bottom: 10px;">✅</div>
+                <h3 style="color: var(--success); margin-bottom: 5px;">Area Tercover!</h3>
+                <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 15px;">
+                    Jaringan Soca Wifi tersedia di alamat <b>${address}</b>.
                 </p>
-                <a href="https://wa.me/${WA_NUMBER}?text=*🛒%20PEMESANAN%20BARU%20-%20SOCA%20WIFI*%0A━━━━━━━━━━━━━━━━━━━━%0A*Nama:*%20${name}%0A*No.%20HP:*%20${phone}%0A*Alamat:*%20${address}%0A━━━━━━━━━━━━━━━━━━━━%0A*Status:*%20Area%20Terverifikasi%20Tercover%0A*Paket:*%2030%20Mbps%20(Rp%20165.000/bulan)%0A━━━━━━━━━━━━━━━━━━━━%0A Mohon%20segera%20diproses%20ya%20kak." target="_blank" style="display: inline-block; background: var(--wa-green); color: white; text-decoration: none; padding: 14px 25px; border-radius: 50px; font-weight: 800; font-size: 15px; box-shadow: 0 10px 20px rgba(37,211,102,0.3); transition: 0.3s;">
-                    Pesan via WhatsApp Sekarang
+                <a href="https://wa.me/${WA_NUMBER}?text=${generateWAMessage('cek_area', name, phone, address)}" target="_blank" style="display: inline-block; background: var(--wa-green); color: white; text-decoration: none; padding: 12px 20px; border-radius: 50px; font-weight: 800; font-size: 14px;">
+                    Pesan via WhatsApp
                 </a>
             `;
         }, 1500);
